@@ -53,119 +53,12 @@ def home():
                         padding: 40px 20px 56px;
                     }
 
-                    .hero {
-                        display: grid;
-                        grid-template-columns: 1.2fr 0.8fr;
-                        gap: 24px;
-                        align-items: stretch;
-                        margin-bottom: 24px;
-                    }
-
                     .card {
                         background: var(--panel);
                         border: 1px solid var(--panel-border);
                         border-radius: 24px;
                         box-shadow: var(--shadow);
                         backdrop-filter: blur(18px);
-                    }
-
-                    .hero-main {
-                        padding: 34px;
-                        position: relative;
-                        overflow: hidden;
-                    }
-
-                    .hero-main::after {
-                        content: "";
-                        position: absolute;
-                        inset: auto -80px -80px auto;
-                        width: 220px;
-                        height: 220px;
-                        border-radius: 999px;
-                        background: radial-gradient(circle, rgba(125, 211, 252, 0.24), transparent 70%);
-                        pointer-events: none;
-                    }
-
-                    .eyebrow {
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 8px;
-                        padding: 8px 12px;
-                        border-radius: 999px;
-                        background: rgba(125, 211, 252, 0.12);
-                        border: 1px solid rgba(125, 211, 252, 0.2);
-                        color: var(--accent);
-                        font-size: 12px;
-                        letter-spacing: 0.08em;
-                        text-transform: uppercase;
-                        margin-bottom: 18px;
-                    }
-
-                    h1 {
-                        margin: 0 0 14px;
-                        font-size: clamp(36px, 5vw, 62px);
-                        line-height: 0.96;
-                        letter-spacing: -0.05em;
-                    }
-
-                    .lede {
-                        margin: 0 0 24px;
-                        max-width: 58ch;
-                        color: var(--muted);
-                        font-size: 16px;
-                        line-height: 1.8;
-                    }
-
-                    .meta-row {
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 10px;
-                        margin-bottom: 4px;
-                    }
-
-                    .pill {
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 8px;
-                        padding: 10px 14px;
-                        border-radius: 999px;
-                        background: rgba(15, 23, 42, 0.6);
-                        border: 1px solid rgba(148, 163, 184, 0.14);
-                        color: var(--text);
-                        font-size: 13px;
-                    }
-
-                    .side {
-                        padding: 24px;
-                        display: grid;
-                        gap: 14px;
-                    }
-
-                    .stat {
-                        padding: 16px 18px;
-                        border-radius: 18px;
-                        background: rgba(15, 23, 42, 0.58);
-                        border: 1px solid rgba(148, 163, 184, 0.14);
-                    }
-
-                    .stat-label {
-                        font-size: 12px;
-                        text-transform: uppercase;
-                        letter-spacing: 0.08em;
-                        color: var(--muted);
-                        margin-bottom: 8px;
-                    }
-
-                    .stat-value {
-                        font-size: 18px;
-                        font-weight: 700;
-                        margin-bottom: 6px;
-                    }
-
-                    .stat-desc {
-                        color: var(--muted);
-                        font-size: 14px;
-                        line-height: 1.6;
                     }
 
                     .grid {
@@ -247,16 +140,6 @@ def home():
                         cursor: progress;
                     }
 
-                    .status {
-                        margin-top: 14px;
-                        min-height: 24px;
-                        font-size: 14px;
-                        color: var(--muted);
-                    }
-
-                    .status.success { color: var(--success); }
-                    .status.error { color: var(--danger); }
-
                     .results {
                         display: grid;
                         gap: 14px;
@@ -301,13 +184,6 @@ def home():
                         line-height: 1.7;
                     }
 
-                    .footer {
-                        margin-top: 24px;
-                        color: var(--muted);
-                        font-size: 13px;
-                        line-height: 1.7;
-                    }
-
                     a { color: var(--accent); }
 
                     @media (max-width: 960px) {
@@ -317,37 +193,6 @@ def home():
       </head>
       <body>
                 <div class="wrap">
-                    <div class="hero">
-                        <section class="card hero-main">
-                            <div class="eyebrow">AI research workspace</div>
-                            <h1>Autonomous AI Research Assistant</h1>
-                            <p class="lede">Search arXiv, inspect candidate papers, and generate a synthesized research brief from a single clean interface. The backend stays API-first so the same deployment can serve a browser UI and machine-readable endpoints.</p>
-                            <div class="meta-row">
-                                <span class="pill">Live search via arXiv</span>
-                                <span class="pill">Research report generation</span>
-                                <span class="pill">Vercel-friendly FastAPI app</span>
-                            </div>
-                        </section>
-
-                        <aside class="card side">
-                            <div class="stat">
-                                <div class="stat-label">Endpoint health</div>
-                                <div class="stat-value" id="healthState">Checking...</div>
-                                <div class="stat-desc">Confirms the deployed FastAPI app is responding.</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-label">Deployment mode</div>
-                                <div class="stat-value">Web app + API</div>
-                                <div class="stat-desc">This homepage is rendered from the same Python app that powers /api/search and /api/report.</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-label">Local UI</div>
-                                <div class="stat-value">Streamlit supported</div>
-                                <div class="stat-desc">The original Streamlit flow still runs locally with streamlit run app.py.</div>
-                            </div>
-                        </aside>
-                    </div>
-
                     <div class="grid">
                         <section class="card section">
                             <h2>Search papers</h2>
@@ -375,21 +220,9 @@ def home():
                             <div id="reportResults" class="results"></div>
                         </section>
                     </div>
-
-                    <section class="card section" style="margin-top:24px;">
-                        <h2>API quick links</h2>
-                        <p class="sub">Use these directly from scripts, notebooks, or the browser.</p>
-                        <pre>{
-    "GET /api/health": "Health check",
-    "GET /api/search?q=...": "Search arXiv papers",
-    "GET /api/report?q=...": "Generate a research brief"
-}</pre>
-                        <div class="footer">Need the old Streamlit interface for local work? Run <a href="/api/health">streamlit run app.py</a> after activating your virtual environment.</div>
-                    </section>
                 </div>
 
                 <script>
-                    const healthState = document.getElementById('healthState');
                     const searchBtn = document.getElementById('searchBtn');
                     const reportBtn = document.getElementById('reportBtn');
                     const searchQuery = document.getElementById('searchQuery');
@@ -444,17 +277,6 @@ def home():
                             throw new Error(message);
                         }
                         return data;
-                    }
-
-                    async function checkHealth() {
-                        try {
-                            const data = await fetchJson('/api/health');
-                            healthState.textContent = data.status === 'ok' ? 'Healthy' : 'Unknown';
-                            healthState.style.color = data.status === 'ok' ? 'var(--success)' : 'var(--text)';
-                        } catch (error) {
-                            healthState.textContent = 'Offline';
-                            healthState.style.color = 'var(--danger)';
-                        }
                     }
 
                     searchBtn.addEventListener('click', async () => {
@@ -512,7 +334,7 @@ def home():
                         }
                     });
 
-                    checkHealth();
+          
                 </script>
       </body>
     </html>
