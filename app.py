@@ -17,21 +17,503 @@ def home():
     <html>
       <head>
         <title>Autonomous AI Research Assistant</title>
-        <style>
-          body { font-family: system-ui, sans-serif; max-width: 760px; margin: 48px auto; padding: 0 20px; line-height: 1.6; }
-          code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
-          a { color: #0b5fff; }
-        </style>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <style>
+                    :root {
+                        color-scheme: dark;
+                        --bg: #07111f;
+                        --panel: rgba(11, 20, 35, 0.78);
+                        --panel-border: rgba(148, 163, 184, 0.18);
+                        --text: #e5eefc;
+                        --muted: #97a6ba;
+                        --accent: #7dd3fc;
+                        --accent-strong: #38bdf8;
+                        --accent-soft: rgba(56, 189, 248, 0.14);
+                        --success: #4ade80;
+                        --danger: #fb7185;
+                        --shadow: 0 24px 80px rgba(2, 8, 23, 0.4);
+                    }
+
+                    * { box-sizing: border-box; }
+
+                    body {
+                        margin: 0;
+                        min-height: 100vh;
+                        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                        color: var(--text);
+                        background:
+                            radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 28%),
+                            radial-gradient(circle at top right, rgba(168, 85, 247, 0.14), transparent 24%),
+                            linear-gradient(180deg, #030712 0%, var(--bg) 100%);
+                    }
+
+                    .wrap {
+                        max-width: 1180px;
+                        margin: 0 auto;
+                        padding: 40px 20px 56px;
+                    }
+
+                    .hero {
+                        display: grid;
+                        grid-template-columns: 1.2fr 0.8fr;
+                        gap: 24px;
+                        align-items: stretch;
+                        margin-bottom: 24px;
+                    }
+
+                    .card {
+                        background: var(--panel);
+                        border: 1px solid var(--panel-border);
+                        border-radius: 24px;
+                        box-shadow: var(--shadow);
+                        backdrop-filter: blur(18px);
+                    }
+
+                    .hero-main {
+                        padding: 34px;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .hero-main::after {
+                        content: "";
+                        position: absolute;
+                        inset: auto -80px -80px auto;
+                        width: 220px;
+                        height: 220px;
+                        border-radius: 999px;
+                        background: radial-gradient(circle, rgba(125, 211, 252, 0.24), transparent 70%);
+                        pointer-events: none;
+                    }
+
+                    .eyebrow {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 8px 12px;
+                        border-radius: 999px;
+                        background: rgba(125, 211, 252, 0.12);
+                        border: 1px solid rgba(125, 211, 252, 0.2);
+                        color: var(--accent);
+                        font-size: 12px;
+                        letter-spacing: 0.08em;
+                        text-transform: uppercase;
+                        margin-bottom: 18px;
+                    }
+
+                    h1 {
+                        margin: 0 0 14px;
+                        font-size: clamp(36px, 5vw, 62px);
+                        line-height: 0.96;
+                        letter-spacing: -0.05em;
+                    }
+
+                    .lede {
+                        margin: 0 0 24px;
+                        max-width: 58ch;
+                        color: var(--muted);
+                        font-size: 16px;
+                        line-height: 1.8;
+                    }
+
+                    .meta-row {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                        margin-bottom: 4px;
+                    }
+
+                    .pill {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 10px 14px;
+                        border-radius: 999px;
+                        background: rgba(15, 23, 42, 0.6);
+                        border: 1px solid rgba(148, 163, 184, 0.14);
+                        color: var(--text);
+                        font-size: 13px;
+                    }
+
+                    .side {
+                        padding: 24px;
+                        display: grid;
+                        gap: 14px;
+                    }
+
+                    .stat {
+                        padding: 16px 18px;
+                        border-radius: 18px;
+                        background: rgba(15, 23, 42, 0.58);
+                        border: 1px solid rgba(148, 163, 184, 0.14);
+                    }
+
+                    .stat-label {
+                        font-size: 12px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.08em;
+                        color: var(--muted);
+                        margin-bottom: 8px;
+                    }
+
+                    .stat-value {
+                        font-size: 18px;
+                        font-weight: 700;
+                        margin-bottom: 6px;
+                    }
+
+                    .stat-desc {
+                        color: var(--muted);
+                        font-size: 14px;
+                        line-height: 1.6;
+                    }
+
+                    .grid {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 24px;
+                    }
+
+                    .section {
+                        padding: 24px;
+                    }
+
+                    .section h2 {
+                        margin: 0 0 8px;
+                        font-size: 22px;
+                        letter-spacing: -0.03em;
+                    }
+
+                    .section p.sub {
+                        margin: 0 0 18px;
+                        color: var(--muted);
+                        line-height: 1.7;
+                    }
+
+                    label {
+                        display: block;
+                        font-size: 13px;
+                        color: var(--muted);
+                        margin: 0 0 8px;
+                    }
+
+                    input, textarea {
+                        width: 100%;
+                        border: 1px solid rgba(148, 163, 184, 0.18);
+                        background: rgba(2, 6, 23, 0.72);
+                        color: var(--text);
+                        border-radius: 16px;
+                        padding: 14px 16px;
+                        outline: none;
+                        transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+                    }
+
+                    textarea { min-height: 140px; resize: vertical; }
+
+                    input:focus, textarea:focus {
+                        border-color: rgba(125, 211, 252, 0.55);
+                        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12);
+                    }
+
+                    .controls {
+                        display: flex;
+                        gap: 12px;
+                        flex-wrap: wrap;
+                        margin-top: 12px;
+                    }
+
+                    button {
+                        appearance: none;
+                        border: 0;
+                        border-radius: 14px;
+                        padding: 12px 18px;
+                        font-size: 14px;
+                        font-weight: 700;
+                        cursor: pointer;
+                        color: #00111f;
+                        background: linear-gradient(135deg, #7dd3fc 0%, #38bdf8 100%);
+                        box-shadow: 0 12px 30px rgba(56, 189, 248, 0.25);
+                    }
+
+                    button.secondary {
+                        background: rgba(15, 23, 42, 0.8);
+                        color: var(--text);
+                        border: 1px solid rgba(148, 163, 184, 0.18);
+                        box-shadow: none;
+                    }
+
+                    button:disabled {
+                        opacity: 0.6;
+                        cursor: progress;
+                    }
+
+                    .status {
+                        margin-top: 14px;
+                        min-height: 24px;
+                        font-size: 14px;
+                        color: var(--muted);
+                    }
+
+                    .status.success { color: var(--success); }
+                    .status.error { color: var(--danger); }
+
+                    .results {
+                        display: grid;
+                        gap: 14px;
+                        margin-top: 18px;
+                    }
+
+                    .result-card {
+                        padding: 18px;
+                        border-radius: 18px;
+                        background: rgba(15, 23, 42, 0.58);
+                        border: 1px solid rgba(148, 163, 184, 0.14);
+                    }
+
+                    .result-card h3 {
+                        margin: 0 0 8px;
+                        font-size: 16px;
+                    }
+
+                    .result-card p {
+                        margin: 0;
+                        color: var(--muted);
+                        line-height: 1.7;
+                    }
+
+                    .sources {
+                        margin: 12px 0 0;
+                        padding-left: 18px;
+                        color: var(--text);
+                    }
+
+                    .sources li { margin: 8px 0; color: var(--muted); }
+
+                    pre {
+                        margin: 0;
+                        padding: 16px;
+                        border-radius: 16px;
+                        overflow: auto;
+                        background: rgba(2, 6, 23, 0.85);
+                        border: 1px solid rgba(148, 163, 184, 0.14);
+                        color: #dbeafe;
+                        font-size: 13px;
+                        line-height: 1.7;
+                    }
+
+                    .footer {
+                        margin-top: 24px;
+                        color: var(--muted);
+                        font-size: 13px;
+                        line-height: 1.7;
+                    }
+
+                    a { color: var(--accent); }
+
+                    @media (max-width: 960px) {
+                        .hero, .grid { grid-template-columns: 1fr; }
+                    }
+                </style>
       </head>
       <body>
-        <h1>Autonomous AI Research Assistant</h1>
-        <p>This deployment exposes API endpoints for search and research reports.</p>
-        <ul>
-          <li><a href="/api/health">/api/health</a></li>
-          <li><a href="/api/search?q=diffusion%20speech%20synthesis">/api/search</a></li>
-          <li><a href="/api/report?q=Compare%20diffusion-based%20speech%20synthesis%20with%20VITS">/api/report</a></li>
-        </ul>
-        <p>For the Streamlit UI, run <code>streamlit run app.py</code> locally.</p>
+                <div class="wrap">
+                    <div class="hero">
+                        <section class="card hero-main">
+                            <div class="eyebrow">AI research workspace</div>
+                            <h1>Autonomous AI Research Assistant</h1>
+                            <p class="lede">Search arXiv, inspect candidate papers, and generate a synthesized research brief from a single clean interface. The backend stays API-first so the same deployment can serve a browser UI and machine-readable endpoints.</p>
+                            <div class="meta-row">
+                                <span class="pill">Live search via arXiv</span>
+                                <span class="pill">Research report generation</span>
+                                <span class="pill">Vercel-friendly FastAPI app</span>
+                            </div>
+                        </section>
+
+                        <aside class="card side">
+                            <div class="stat">
+                                <div class="stat-label">Endpoint health</div>
+                                <div class="stat-value" id="healthState">Checking...</div>
+                                <div class="stat-desc">Confirms the deployed FastAPI app is responding.</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">Deployment mode</div>
+                                <div class="stat-value">Web app + API</div>
+                                <div class="stat-desc">This homepage is rendered from the same Python app that powers /api/search and /api/report.</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">Local UI</div>
+                                <div class="stat-value">Streamlit supported</div>
+                                <div class="stat-desc">The original Streamlit flow still runs locally with streamlit run app.py.</div>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <div class="grid">
+                        <section class="card section">
+                            <h2>Search papers</h2>
+                            <p class="sub">Query arXiv and render the top matches without leaving the page.</p>
+                            <label for="searchQuery">Research topic</label>
+                            <input id="searchQuery" type="text" placeholder="Arabic speech synthesis" />
+                            <div class="controls">
+                                <button id="searchBtn">Search papers</button>
+                                <button id="exampleSearchBtn" class="secondary">Load example</button>
+                            </div>
+                            <div id="searchStatus" class="status"></div>
+                            <div id="searchResults" class="results"></div>
+                        </section>
+
+                        <section class="card section">
+                            <h2>Generate report</h2>
+                            <p class="sub">Ask a research question and get a synthesized answer plus sources.</p>
+                            <label for="reportQuery">Question</label>
+                            <textarea id="reportQuery" placeholder="Compare diffusion-based speech synthesis with VITS architectures."></textarea>
+                            <div class="controls">
+                                <button id="reportBtn">Generate report</button>
+                                <button id="exampleReportBtn" class="secondary">Load example</button>
+                            </div>
+                            <div id="reportStatus" class="status"></div>
+                            <div id="reportResults" class="results"></div>
+                        </section>
+                    </div>
+
+                    <section class="card section" style="margin-top:24px;">
+                        <h2>API quick links</h2>
+                        <p class="sub">Use these directly from scripts, notebooks, or the browser.</p>
+                        <pre>{
+    "GET /api/health": "Health check",
+    "GET /api/search?q=...": "Search arXiv papers",
+    "GET /api/report?q=...": "Generate a research brief"
+}</pre>
+                        <div class="footer">Need the old Streamlit interface for local work? Run <a href="/api/health">streamlit run app.py</a> after activating your virtual environment.</div>
+                    </section>
+                </div>
+
+                <script>
+                    const healthState = document.getElementById('healthState');
+                    const searchBtn = document.getElementById('searchBtn');
+                    const reportBtn = document.getElementById('reportBtn');
+                    const searchQuery = document.getElementById('searchQuery');
+                    const reportQuery = document.getElementById('reportQuery');
+                    const searchStatus = document.getElementById('searchStatus');
+                    const reportStatus = document.getElementById('reportStatus');
+                    const searchResults = document.getElementById('searchResults');
+                    const reportResults = document.getElementById('reportResults');
+
+                    document.getElementById('exampleSearchBtn').addEventListener('click', () => {
+                        searchQuery.value = 'diffusion speech synthesis';
+                    });
+
+                    document.getElementById('exampleReportBtn').addEventListener('click', () => {
+                        reportQuery.value = 'Compare diffusion-based speech synthesis with VITS architectures.';
+                    });
+
+                    function setStatus(el, message, kind = '') {
+                        el.textContent = message;
+                        el.className = 'status' + (kind ? ' ' + kind : '');
+                    }
+
+                    function escapeHtml(value) {
+                        return String(value)
+                            .replaceAll('&', '&amp;')
+                            .replaceAll('<', '&lt;')
+                            .replaceAll('>', '&gt;')
+                            .replaceAll('"', '&quot;')
+                            .replaceAll("'", '&#39;');
+                    }
+
+                    function renderPaperCard(paper) {
+                        const authors = (paper.authors || []).slice(0, 4).join(', ');
+                        return `
+                            <article class="result-card">
+                                <h3>${escapeHtml(paper.title)}</h3>
+                                <p><strong>Published:</strong> ${escapeHtml(paper.published || 'Unknown')}</p>
+                                <p><strong>Authors:</strong> ${escapeHtml(authors || 'Unknown')}</p>
+                                <p>${escapeHtml(paper.summary || '').slice(0, 420)}${(paper.summary || '').length > 420 ? '…' : ''}</p>
+                            </article>
+                        `;
+                    }
+
+                    async function fetchJson(url, options = {}) {
+                        const response = await fetch(url, {
+                            headers: { 'Accept': 'application/json' },
+                            ...options,
+                        });
+                        const data = await response.json().catch(() => ({}));
+                        if (!response.ok) {
+                            const message = data.detail || data.error || response.statusText;
+                            throw new Error(message);
+                        }
+                        return data;
+                    }
+
+                    async function checkHealth() {
+                        try {
+                            const data = await fetchJson('/api/health');
+                            healthState.textContent = data.status === 'ok' ? 'Healthy' : 'Unknown';
+                            healthState.style.color = data.status === 'ok' ? 'var(--success)' : 'var(--text)';
+                        } catch (error) {
+                            healthState.textContent = 'Offline';
+                            healthState.style.color = 'var(--danger)';
+                        }
+                    }
+
+                    searchBtn.addEventListener('click', async () => {
+                        const query = searchQuery.value.trim();
+                        if (!query) {
+                            setStatus(searchStatus, 'Enter a research topic first.', 'error');
+                            return;
+                        }
+
+                        searchBtn.disabled = true;
+                        setStatus(searchStatus, 'Searching arXiv...', '');
+                        searchResults.innerHTML = '';
+
+                        try {
+                            const data = await fetchJson(`/api/search?q=${encodeURIComponent(query)}&max_results=5`);
+                            const papers = data.papers || [];
+                            setStatus(searchStatus, `${papers.length} paper(s) found for “${query}”.`, 'success');
+                            searchResults.innerHTML = papers.length
+                                ? papers.map(renderPaperCard).join('')
+                                : '<div class="result-card"><p>No papers found.</p></div>';
+                        } catch (error) {
+                            setStatus(searchStatus, error.message, 'error');
+                        } finally {
+                            searchBtn.disabled = false;
+                        }
+                    });
+
+                    reportBtn.addEventListener('click', async () => {
+                        const query = reportQuery.value.trim();
+                        if (!query) {
+                            setStatus(reportStatus, 'Enter a research question first.', 'error');
+                            return;
+                        }
+
+                        reportBtn.disabled = true;
+                        setStatus(reportStatus, 'Generating report...', '');
+                        reportResults.innerHTML = '';
+
+                        try {
+                            const data = await fetchJson(`/api/report?q=${encodeURIComponent(query)}`);
+                            const sources = (data.sources || []).map((source) => `<li>${escapeHtml(source)}</li>`).join('');
+                            reportResults.innerHTML = `
+                                <article class="result-card">
+                                    <h3>Research report</h3>
+                                    <pre>${escapeHtml(data.answer || '')}</pre>
+                                    <h3 style="margin-top:18px;">Sources</h3>
+                                    <ul class="sources">${sources || '<li>No sources returned.</li>'}</ul>
+                                </article>
+                            `;
+                            setStatus(reportStatus, 'Report generated successfully.', 'success');
+                        } catch (error) {
+                            setStatus(reportStatus, error.message, 'error');
+                        } finally {
+                            reportBtn.disabled = false;
+                        }
+                    });
+
+                    checkHealth();
+                </script>
       </body>
     </html>
     """
@@ -97,9 +579,9 @@ def _run_streamlit_ui():
 
     st.markdown(
         """
-Search research papers, build a knowledge base,
-and generate AI-powered research reports.
-"""
+    Search research papers, build a knowledge base,
+    and generate AI-powered research reports.
+    """
     )
 
     st.header(
