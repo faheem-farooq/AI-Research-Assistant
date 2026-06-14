@@ -3,7 +3,12 @@ from tools.retriever import retrieve_context
 from tools.summarizer import summarize_documents
 from services.llm import get_llm
 
-llm = get_llm()
+from functools import lru_cache
+
+
+@lru_cache(maxsize=1)
+def _get_llm():
+    return get_llm()
 
 
 def ask_research_agent(query: str):
@@ -40,9 +45,12 @@ Provide:
 4. Sources used
 """
 
-    response = llm.invoke(prompt)
+    response = _get_llm().invoke(prompt)
 
     return {
         "answer": response.content,
-        "papers": papers
+        "papers": papers,
+        "sources": [
+            paper["title"] for paper in papers
+        ]
     }

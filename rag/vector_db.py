@@ -1,3 +1,5 @@
+import os
+
 from langchain_community.vectorstores import (
     FAISS
 )
@@ -27,6 +29,24 @@ def create_vector_store(chunks):
 
 
 def load_vector_store():
+
+    if not os.path.isdir(VECTOR_DB_PATH):
+        return None
+
+    required_files = (
+        "index.faiss",
+        "index.pkl"
+    )
+
+    if not all(
+        os.path.exists(
+            os.path.join(
+                VECTOR_DB_PATH,
+                filename
+            )
+        ) for filename in required_files
+    ):
+        return None
 
     embeddings = get_embeddings()
 

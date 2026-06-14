@@ -12,6 +12,9 @@ def retrieve_context(
         load_vector_store()
     )
 
+    if vectorstore is None:
+        return []
+
     docs = (
         vectorstore.similarity_search(
             query,
